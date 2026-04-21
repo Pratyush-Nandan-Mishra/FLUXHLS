@@ -1,0 +1,3 @@
+/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles/fluxhls.dir
+/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles/rebuild_cache.dir

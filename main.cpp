@@ -1,5 +1,6 @@
 #include "stage1/Frontend.h"
 #include "stage1/Dumper.h"
+#include "stage2/AffineAnalysis.h"
 #include <iostream>
 
 // Usage: fluxhls <source.cpp> [-- extra-clang-args...]
@@ -11,23 +12,26 @@ int main(int argc, const char **argv) {
 
     const std::string filepath = argv[1];
 
-    // Collect any extra compiler args passed after --
     std::vector<std::string> extraArgs;
     for (int i = 2; i < argc; ++i) {
         std::string a = argv[i];
         if (a != "--") extraArgs.push_back(a);
     }
 
-    // Stage 1a: extract #pragma HLS from source text
+    // ── Stage 1: pragma extraction + AST walk ─────────────────────────────────
     auto pragmas = parsePragmas(filepath);
-
-    // Stage 1b: walk AST and build HLS IR
     HLSContext ctx;
     buildHLSContext(filepath, pragmas, ctx, extraArgs);
 
-    // Output
-    PrettyDumper dumper;
-    ctx.dump(dumper);
+    PrettyDumper stage1Dump;
+    ctx.dump(stage1Dump);
+
+    std::cout << std::string(56, '=') << "\n\n";
+
+    // ── Stage 2: affine analysis + dependence graph ───────────────────────────
+    AffineContext affCtx;
+    buildAffineContext(ctx, affCtx);
+    dumpAffineContext(affCtx);
 
     return 0;
 }

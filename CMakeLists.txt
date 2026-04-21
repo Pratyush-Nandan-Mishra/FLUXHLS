@@ -82,6 +82,7 @@ add_executable(fluxhls
     main.cpp
     stage1/Frontend.cpp
     stage1/Dumper.cpp
+    stage2/AffineAnalysis.cpp
 )
 
 target_include_directories(fluxhls PRIVATE

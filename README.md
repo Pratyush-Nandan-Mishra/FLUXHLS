@@ -7,27 +7,28 @@ replicating each stage of its pipeline from first principles.
 ```
 C/C++ + #pragma HLS
         │
-        ▼  Stage 1 — Frontend            ✅ Done
+        ▼  Stage 1 — Frontend                  ✅ Done
    Clang AST  +  extracted pragma map
         │
-        ▼  Stage 2 — Affine IR / DDG     Planned
-   normalised loop IR + data-dependence graph
+        ▼  Stage 2 — Affine Analysis / DDG     ✅ Done
+   access patterns + dependence graph + II feasibility
         │
-        ▼  Stage 3 — Scheduling          Planned
+        ▼  Stage 3 — Scheduling                Planned
    every op assigned a clock cycle  (ASAP / ALAP / SDC)
         │
-        ▼  Stage 4 — Resource binding    Planned
+        ▼  Stage 4 — Resource binding          Planned
    ops mapped to DSP48 / LUT / BRAM instances
         │
-        ▼  Stage 5 — Interface synthesis Planned
+        ▼  Stage 5 — Interface synthesis       Planned
    AXI4-Master / AXI4-Lite / ap_ctrl wrappers
         │
-        ▼  Stage 6 — RTL emission        Planned
+        ▼  Stage 6 — RTL emission              Planned
    synthesisable SystemVerilog (.sv)
 ```
 
-For a detailed explanation of Stage 1 — what it does, how it works, and what
-each file is responsible for — see [docs/stage1.md](docs/stage1.md).
+Deep-dive docs for each completed stage:
+- [docs/stage1.md](docs/stage1.md) — Frontend: pragma extraction + AST walk
+- [docs/stage2.md](docs/stage2.md) — Affine analysis: access patterns, DDG, II feasibility
 
 ---
 
@@ -36,16 +37,21 @@ each file is responsible for — see [docs/stage1.md](docs/stage1.md).
 ```
 FluxHLS/
 ├── CMakeLists.txt
-├── main.cpp              ← CLI entry point
-├── stage1/               ← Stage 1: Frontend (pragma extraction + AST walk)
+├── main.cpp                  ← CLI entry point (runs Stage 1 then Stage 2)
+├── stage1/                   ← Stage 1: Frontend
 │   ├── Pragma.h
 │   ├── HLSContext.h
 │   ├── Frontend.h / Frontend.cpp
 │   └── Dumper.h  / Dumper.cpp
+├── stage2/                   ← Stage 2: Affine Analysis
+│   ├── AffineContext.h
+│   ├── AffineAnalysis.h
+│   └── AffineAnalysis.cpp
 ├── docs/
-│   └── stage1.md         ← Stage 1 deep-dive
+│   ├── stage1.md
+│   └── stage2.md
 ├── scripts/
-│   └── setup_ubuntu.sh   ← one-command Ubuntu setup
+│   └── setup_ubuntu.sh       ← one-command Ubuntu setup
 └── test/
     ├── vadd.cpp
     ├── fir.cpp
@@ -88,15 +94,6 @@ cmake -S . -B build -DLLVM_INSTALL_DIR=/usr/local/opt/llvm
 cmake --build build --parallel
 ```
 
-### Windows
-
-```powershell
-# Install LLVM from https://releases.llvm.org/ (tick "Add LLVM to PATH")
-# Open a Visual Studio 2022 Developer Command Prompt
-cmake -S . -B build
-cmake --build build --config Release
-```
-
 ### Manual Linux build
 
 ```bash
@@ -109,6 +106,8 @@ cmake --build build --parallel
 
 ## Run
 
+Each invocation runs Stage 1 then Stage 2 and prints both outputs.
+
 ```bash
 # Linux / macOS
 ./build/fluxhls test/vadd.cpp
@@ -116,9 +115,44 @@ cmake --build build --parallel
 ./build/fluxhls test/matmul.cpp
 ./build/fluxhls test/conv2d.cpp
 
-# Windows
-./build/Release/fluxhls.exe test/vadd.cpp
-
 # Extra compiler flags after --
 ./build/fluxhls test/matmul.cpp -- -I/some/include
+```
+
+---
+
+## Verify Stage 2
+
+Run all four test samples and check the key Stage 2 findings:
+
+```bash
+# vadd  — no loop-carried dep → RecMII=0, II=1 purely from ResMII
+./build/fluxhls test/vadd.cpp
+# Expected Stage 2:
+#   L0  WRITE C[i] → SEQUENTIAL
+#   RecMII = 0  (no loop-carried dependences)
+#   Achievable II = 1  ✓ feasible
+
+# fir  — outer loop writes after inner unrolled loop → REDUCTION → RecMII=1
+./build/fluxhls test/fir.cpp
+# Expected Stage 2:
+#   L0   WRITE out_signal[i] → REDUCTION
+#   RecMII = 1  (accumulator dep)
+#   L0.L1  READ in_signal[i-t] → SLIDING_WINDOW
+#          READ coeffs[t]      → SEQUENTIAL
+
+# matmul  — j-loop write is k-invariant → REDUCTION + B is column-major → STRIDED
+./build/fluxhls test/matmul.cpp
+# Expected Stage 2:
+#   L0.L1    WRITE C[i*N+j]   → REDUCTION
+#            RecMII = 1  (accumulator dep)
+#   L0.L1.L2 READ A[i*N+k]   → SEQUENTIAL   stride=1
+#            READ B[k*N+j]   → STRIDED       stride=N
+
+# conv2d  — innermost kw loop has only reads (scalar sum accumulator) → RecMII=1
+./build/fluxhls test/conv2d.cpp
+# Expected Stage 2:
+#   L0.L1.L2.L3  [PIPELINE II=1]
+#   RecMII = 1  (reads-only loop → scalar accumulator)
+#   Achievable II = 1  ✓ feasible
 ```
