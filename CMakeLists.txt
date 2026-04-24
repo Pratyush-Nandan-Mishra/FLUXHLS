@@ -83,6 +83,9 @@ add_executable(fluxhls
     stage1/Frontend.cpp
     stage1/Dumper.cpp
     stage2/AffineAnalysis.cpp
+    stage3/Scheduler.cpp
+    stage4/Binder.cpp
+    stage5/InterfaceSynth.cpp
 )
 
 target_include_directories(fluxhls PRIVATE

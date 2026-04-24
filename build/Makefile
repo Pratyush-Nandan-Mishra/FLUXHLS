@@ -225,6 +225,78 @@ stage2/AffineAnalysis.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.s
 .PHONY : stage2/AffineAnalysis.cpp.s
 
+stage3/Scheduler.o: stage3/Scheduler.cpp.o
+.PHONY : stage3/Scheduler.o
+
+# target to build an object file
+stage3/Scheduler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o
+.PHONY : stage3/Scheduler.cpp.o
+
+stage3/Scheduler.i: stage3/Scheduler.cpp.i
+.PHONY : stage3/Scheduler.i
+
+# target to preprocess a source file
+stage3/Scheduler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.i
+.PHONY : stage3/Scheduler.cpp.i
+
+stage3/Scheduler.s: stage3/Scheduler.cpp.s
+.PHONY : stage3/Scheduler.s
+
+# target to generate assembly for a file
+stage3/Scheduler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.s
+.PHONY : stage3/Scheduler.cpp.s
+
+stage4/Binder.o: stage4/Binder.cpp.o
+.PHONY : stage4/Binder.o
+
+# target to build an object file
+stage4/Binder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o
+.PHONY : stage4/Binder.cpp.o
+
+stage4/Binder.i: stage4/Binder.cpp.i
+.PHONY : stage4/Binder.i
+
+# target to preprocess a source file
+stage4/Binder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage4/Binder.cpp.i
+.PHONY : stage4/Binder.cpp.i
+
+stage4/Binder.s: stage4/Binder.cpp.s
+.PHONY : stage4/Binder.s
+
+# target to generate assembly for a file
+stage4/Binder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage4/Binder.cpp.s
+.PHONY : stage4/Binder.cpp.s
+
+stage5/InterfaceSynth.o: stage5/InterfaceSynth.cpp.o
+.PHONY : stage5/InterfaceSynth.o
+
+# target to build an object file
+stage5/InterfaceSynth.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o
+.PHONY : stage5/InterfaceSynth.cpp.o
+
+stage5/InterfaceSynth.i: stage5/InterfaceSynth.cpp.i
+.PHONY : stage5/InterfaceSynth.i
+
+# target to preprocess a source file
+stage5/InterfaceSynth.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.i
+.PHONY : stage5/InterfaceSynth.cpp.i
+
+stage5/InterfaceSynth.s: stage5/InterfaceSynth.cpp.s
+.PHONY : stage5/InterfaceSynth.s
+
+# target to generate assembly for a file
+stage5/InterfaceSynth.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.s
+.PHONY : stage5/InterfaceSynth.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -246,6 +318,15 @@ help:
 	@echo "... stage2/AffineAnalysis.o"
 	@echo "... stage2/AffineAnalysis.i"
 	@echo "... stage2/AffineAnalysis.s"
+	@echo "... stage3/Scheduler.o"
+	@echo "... stage3/Scheduler.i"
+	@echo "... stage3/Scheduler.s"
+	@echo "... stage4/Binder.o"
+	@echo "... stage4/Binder.i"
+	@echo "... stage4/Binder.s"
+	@echo "... stage5/InterfaceSynth.o"
+	@echo "... stage5/InterfaceSynth.i"
+	@echo "... stage5/InterfaceSynth.s"
 .PHONY : help
 
 

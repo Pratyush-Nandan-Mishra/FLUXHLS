@@ -1,6 +1,9 @@
 #include "stage1/Frontend.h"          // parsePragmas() and buildHLSContext()
 #include "stage1/Dumper.h"            // IDumper and PrettyDumper
 #include "stage2/AffineAnalysis.h"    //** buildAffineContext() and dumpAffineContext()
+#include "stage3/Scheduler.h"         //** buildSchedule() and dumpSchedule()
+#include "stage4/Binder.h"            //** buildBindings() and dumpBindings()
+#include "stage5/InterfaceSynth.h"    //** buildInterfaces() and dumpInterfaces()
 #include <iostream>                    // std::cerr for error output
 
 // Usage: fluxhls <source.cpp> [-- extra-clang-args...]
@@ -32,6 +35,27 @@ int main(int argc, const char **argv) {
     AffineContext affCtx;                          // Stage 2 IR: enriched loops with access patterns and DDG
     buildAffineContext(ctx, affCtx);               //** classify accesses, compute RecMII, build dependence graph
     dumpAffineContext(affCtx);                     // print Stage 2 analysis results to stdout
+
+    std::cout << std::string(56, '=') << "\n\n";  // visual separator between Stage 2 and Stage 3 output
+
+    // ── Stage 3: ASAP / ALAP scheduling ──────────────────────────────────────
+    ScheduleContext schedCtx;                      // Stage 3 IR: ops assigned to clock cycles
+    buildSchedule(affCtx, schedCtx);               //** infer ops from patterns, run ASAP then ALAP
+    dumpSchedule(schedCtx);                        // print schedule tables and pipeline depths to stdout
+
+    std::cout << std::string(56, '=') << "\n\n";  // visual separator between Stage 3 and Stage 4 output
+
+    // ── Stage 4: resource binding ─────────────────────────────────────────────
+    BindingContext bindCtx;                        // Stage 4 IR: arrays and ops mapped to hardware units
+    buildBindings(affCtx, schedCtx, bindCtx);      //** apply 5-rule array binding + assign DSP48/BRAM/Reg units
+    dumpBindings(bindCtx);                         // print array-binding tables, op-binding tables, resource counts
+
+    std::cout << std::string(56, '=') << "\n\n";  // visual separator between Stage 4 and Stage 5 output
+
+    // ── Stage 5: interface synthesis ──────────────────────────────────────────
+    InterfaceContext ifCtx;                        // Stage 5 IR: AXI4-Lite register map + AXI4-Master ports
+    buildInterfaces(bindCtx, ifCtx);               //** infer AXI interfaces from binding pragmas and loop bounds
+    dumpInterfaces(ifCtx);                         // print AXI4-Lite register map and AXI4-Master port table
 
     return 0;                                      // successful exit
 }

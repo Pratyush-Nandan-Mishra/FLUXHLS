@@ -125,12 +125,57 @@ CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/USER/assignments/FLUXHLS/stage2/AffineAnalysis.cpp -o CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.s
 
+CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o: CMakeFiles/fluxhls.dir/flags.make
+CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o: ../stage3/Scheduler.cpp
+CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o: CMakeFiles/fluxhls.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o -MF CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o.d -o CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o -c /mnt/c/Users/USER/assignments/FLUXHLS/stage3/Scheduler.cpp
+
+CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/USER/assignments/FLUXHLS/stage3/Scheduler.cpp > CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.i
+
+CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/USER/assignments/FLUXHLS/stage3/Scheduler.cpp -o CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.s
+
+CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o: CMakeFiles/fluxhls.dir/flags.make
+CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o: ../stage4/Binder.cpp
+CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o: CMakeFiles/fluxhls.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o -MF CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o.d -o CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o -c /mnt/c/Users/USER/assignments/FLUXHLS/stage4/Binder.cpp
+
+CMakeFiles/fluxhls.dir/stage4/Binder.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fluxhls.dir/stage4/Binder.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/USER/assignments/FLUXHLS/stage4/Binder.cpp > CMakeFiles/fluxhls.dir/stage4/Binder.cpp.i
+
+CMakeFiles/fluxhls.dir/stage4/Binder.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fluxhls.dir/stage4/Binder.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/USER/assignments/FLUXHLS/stage4/Binder.cpp -o CMakeFiles/fluxhls.dir/stage4/Binder.cpp.s
+
+CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o: CMakeFiles/fluxhls.dir/flags.make
+CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o: ../stage5/InterfaceSynth.cpp
+CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o: CMakeFiles/fluxhls.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o -MF CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o.d -o CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o -c /mnt/c/Users/USER/assignments/FLUXHLS/stage5/InterfaceSynth.cpp
+
+CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/USER/assignments/FLUXHLS/stage5/InterfaceSynth.cpp > CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.i
+
+CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/USER/assignments/FLUXHLS/stage5/InterfaceSynth.cpp -o CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.s
+
 # Object files for target fluxhls
 fluxhls_OBJECTS = \
 "CMakeFiles/fluxhls.dir/main.cpp.o" \
 "CMakeFiles/fluxhls.dir/stage1/Frontend.cpp.o" \
 "CMakeFiles/fluxhls.dir/stage1/Dumper.cpp.o" \
-"CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.o"
+"CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.o" \
+"CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o" \
+"CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o" \
+"CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o"
 
 # External object files for target fluxhls
 fluxhls_EXTERNAL_OBJECTS =
@@ -139,10 +184,13 @@ fluxhls: CMakeFiles/fluxhls.dir/main.cpp.o
 fluxhls: CMakeFiles/fluxhls.dir/stage1/Frontend.cpp.o
 fluxhls: CMakeFiles/fluxhls.dir/stage1/Dumper.cpp.o
 fluxhls: CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.o
+fluxhls: CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o
+fluxhls: CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o
+fluxhls: CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o
 fluxhls: CMakeFiles/fluxhls.dir/build.make
 fluxhls: /usr/lib/llvm-14/lib/libclang.so
 fluxhls: CMakeFiles/fluxhls.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable fluxhls"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/USER/assignments/FLUXHLS/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable fluxhls"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fluxhls.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

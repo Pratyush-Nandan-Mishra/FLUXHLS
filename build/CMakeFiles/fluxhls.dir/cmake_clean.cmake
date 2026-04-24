@@ -7,6 +7,12 @@ file(REMOVE_RECURSE
   "CMakeFiles/fluxhls.dir/stage1/Frontend.cpp.o.d"
   "CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.o"
   "CMakeFiles/fluxhls.dir/stage2/AffineAnalysis.cpp.o.d"
+  "CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o"
+  "CMakeFiles/fluxhls.dir/stage3/Scheduler.cpp.o.d"
+  "CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o"
+  "CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o.d"
+  "CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o"
+  "CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o.d"
   "fluxhls"
   "fluxhls.pdb"
 )

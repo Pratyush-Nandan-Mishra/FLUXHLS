@@ -198,6 +198,9 @@ LIBCLANG_INCLUDE_DIR:PATH=/usr/lib/llvm-14/include
 //Path to a library.
 LIBCLANG_LIB:FILEPATH=/usr/lib/llvm-14/lib/libclang.so
 
+//No help, variable specified on the command line.
+LLVM_INSTALL_DIR:UNINITIALIZED=/usr/lib/llvm-17
+
 //Path to a program.
 _llvm_config:FILEPATH=_llvm_config-NOTFOUND
 
