@@ -86,6 +86,7 @@ add_executable(fluxhls
     stage3/Scheduler.cpp
     stage4/Binder.cpp
     stage5/InterfaceSynth.cpp
+    stage6/RTLEmitter.cpp
 )
 
 target_include_directories(fluxhls PRIVATE

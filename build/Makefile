@@ -297,6 +297,30 @@ stage5/InterfaceSynth.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.s
 .PHONY : stage5/InterfaceSynth.cpp.s
 
+stage6/RTLEmitter.o: stage6/RTLEmitter.cpp.o
+.PHONY : stage6/RTLEmitter.o
+
+# target to build an object file
+stage6/RTLEmitter.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage6/RTLEmitter.cpp.o
+.PHONY : stage6/RTLEmitter.cpp.o
+
+stage6/RTLEmitter.i: stage6/RTLEmitter.cpp.i
+.PHONY : stage6/RTLEmitter.i
+
+# target to preprocess a source file
+stage6/RTLEmitter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage6/RTLEmitter.cpp.i
+.PHONY : stage6/RTLEmitter.cpp.i
+
+stage6/RTLEmitter.s: stage6/RTLEmitter.cpp.s
+.PHONY : stage6/RTLEmitter.s
+
+# target to generate assembly for a file
+stage6/RTLEmitter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fluxhls.dir/build.make CMakeFiles/fluxhls.dir/stage6/RTLEmitter.cpp.s
+.PHONY : stage6/RTLEmitter.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -327,6 +351,9 @@ help:
 	@echo "... stage5/InterfaceSynth.o"
 	@echo "... stage5/InterfaceSynth.i"
 	@echo "... stage5/InterfaceSynth.s"
+	@echo "... stage6/RTLEmitter.o"
+	@echo "... stage6/RTLEmitter.i"
+	@echo "... stage6/RTLEmitter.s"
 .PHONY : help
 
 

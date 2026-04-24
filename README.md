@@ -23,7 +23,7 @@ C/C++ + #pragma HLS
         ▼  Stage 5 — Interface Synthesis       ✅ Done
    AXI4-Lite register map + AXI4-Master burst ports
         │
-        ▼  Stage 6 — RTL emission              Planned
+        ▼  Stage 6 — RTL emission              ✅ Done
    synthesisable SystemVerilog (.sv)
 ```
 
@@ -33,6 +33,7 @@ Deep-dive docs for each completed stage:
 - [docs/stage3.md](docs/stage3.md) — Scheduling: ASAP/ALAP, op inference, pipeline depth
 - [docs/stage4.md](docs/stage4.md) — Resource binding: 5-rule table, DSP48/BRAM/ShiftReg assignment
 - [docs/stage5.md](docs/stage5.md) — Interface synthesis: AXI4-Lite register map, AXI4-Master burst ports
+- [docs/stage6.md](docs/stage6.md) — RTL emission: SystemVerilog modules, FSM, pipeline, AXI burst engines
 
 ---
 
@@ -41,7 +42,7 @@ Deep-dive docs for each completed stage:
 ```
 FluxHLS/
 ├── CMakeLists.txt
-├── main.cpp                  ← CLI entry point (runs Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5)
+├── main.cpp                  ← CLI entry point (runs Stage 1 → … → Stage 6)
 ├── stage1/                   ← Stage 1: Frontend
 │   ├── Pragma.h
 │   ├── HLSContext.h
@@ -63,12 +64,22 @@ FluxHLS/
 │   ├── InterfaceContext.h
 │   ├── InterfaceSynth.h
 │   └── InterfaceSynth.cpp
+├── stage6/                   ← Stage 6: RTL Emission
+│   ├── RTLContext.h
+│   ├── RTLEmitter.h
+│   └── RTLEmitter.cpp
+├── output/                   ← Generated SystemVerilog (created at runtime)
+│   ├── vadd.sv
+│   ├── fir_filter.sv
+│   ├── matmul.sv
+│   └── conv2d.sv
 ├── docs/
 │   ├── stage1.md
 │   ├── stage2.md
 │   ├── stage3.md
 │   ├── stage4.md
-│   └── stage5.md
+│   ├── stage5.md
+│   └── stage6.md
 ├── scripts/
 │   └── setup_ubuntu.sh       ← one-command Ubuntu setup
 └── test/
@@ -125,14 +136,15 @@ cmake --build build --parallel
 
 ## Run
 
-Each invocation runs Stage 1 → Stage 2 → Stage 3 → Stage 4 → Stage 5 and prints all outputs.
+Each invocation runs all six stages and prints analysis to stdout.
+Stage 6 also writes a synthesisable `.sv` file to `output/<func>.sv`.
 
 ```bash
 # Linux / macOS
-./build/fluxhls test/vadd.cpp
-./build/fluxhls test/fir.cpp
-./build/fluxhls test/matmul.cpp
-./build/fluxhls test/conv2d.cpp
+./build/fluxhls test/vadd.cpp        # → output/vadd.sv
+./build/fluxhls test/fir.cpp         # → output/fir_filter.sv
+./build/fluxhls test/matmul.cpp      # → output/matmul.sv
+./build/fluxhls test/conv2d.cpp      # → output/conv2d.sv
 
 # Extra compiler flags after --
 ./build/fluxhls test/matmul.cpp -- -I/some/include
@@ -315,4 +327,49 @@ Run all four test samples and check the AXI4-Lite register maps and AXI4-Master 
 #   kernel → ?  32-bit  1 channel  9 elems     (no binding — Stage 1 limitation)
 #   output → ?  32-bit  1 channel  900 elems   (no binding — Stage 1 limitation)
 #   AXI summary: 0 read, 0 write, 3 unknown
+```
+
+---
+
+## Verify Stage 6
+
+After running, check `output/<func>.sv` for the generated SystemVerilog.
+Each module has seven clearly-labelled sections.
+
+```bash
+# vadd → output/vadd.sv
+# Expected: module vadd_top #(DATA_WIDTH=32, ADDR_WIDTH=64, N=1024)
+# Sections:
+#   FSM             IDLE / RUNNING / DONE state register
+#   AXI4-Lite       ctrl_reg + N_reg + A/B/C_base_reg; write always_ff + read always_comb
+#   Loop counter    i_cnt 0..N; loop_done assign
+#   Pipeline        stage-0 BRAM reads → stage-1 FADD → stage-2 BRAM write
+#   AXI read A      AR_IDLE → AR_ADDR → AR_DATA; fills mem_A[beat]
+#   AXI read B      same pattern; fills mem_B[beat]
+#   AXI write C     AW_IDLE → AW_ADDR → AW_DATA → AW_RESP; drains mem_C[beat]
+
+# fir_filter → output/fir_filter.sv
+# Expected: module fir_filter_top #(DATA_WIDTH=32, ADDR_WIDTH=64, length=1024)
+# Sections: FSM, AXI4-Lite (in_signal_base + out_signal_base),
+#           Loop counter (i_cnt), ShiftReg advance (shreg_in_signal),
+#           Pipeline (stage-0 ShiftReg read → stage-1 MAC → stage-2 BRAM write),
+#           AXI read in_signal, AXI write out_signal
+
+# matmul → output/matmul.sv
+# Expected: module matmul_top #(DATA_WIDTH=32, ADDR_WIDTH=64, N=1024)
+# Sections: FSM, AXI4-Lite (A/B/C_base_reg),
+#           Loop counters (i_cnt + j_cnt with carry),
+#           Pipeline (stage-0 BRAM reads → stage-1 MAC acc_reg → stage-2 BRAM write),
+#           AXI read A, AXI read B, AXI write C
+
+# conv2d → output/conv2d.sv
+# Expected: module conv2d_top #(DATA_WIDTH=32, ADDR_WIDTH=64)
+# Note: loop bounds (30, 30, 3, 3) are numeric — no extra parameters
+# Sections: FSM, AXI4-Lite (input/kernel/output_base_reg),
+#           Loop counters (oh/ow/kh/kw with carry chain),
+#           Pipeline (stage-0 placeholder → stage-1 acc_reg MAC),
+#           AXI read+write engines for all 3 ports (direction unknown → both channels)
+
+# To open in Vivado: File → Add Sources → Add or create design sources → select output/*.sv
+# Vivado will elaborate, infer BRAMs/DSP48s, and report resource utilisation.
 ```

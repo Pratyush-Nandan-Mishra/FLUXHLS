@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/fluxhls.dir/stage4/Binder.cpp.o.d"
   "CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o"
   "CMakeFiles/fluxhls.dir/stage5/InterfaceSynth.cpp.o.d"
+  "CMakeFiles/fluxhls.dir/stage6/RTLEmitter.cpp.o"
+  "CMakeFiles/fluxhls.dir/stage6/RTLEmitter.cpp.o.d"
   "fluxhls"
   "fluxhls.pdb"
 )

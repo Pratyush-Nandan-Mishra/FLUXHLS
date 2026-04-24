@@ -4,6 +4,7 @@
 #include "stage3/Scheduler.h"         //** buildSchedule() and dumpSchedule()
 #include "stage4/Binder.h"            //** buildBindings() and dumpBindings()
 #include "stage5/InterfaceSynth.h"    //** buildInterfaces() and dumpInterfaces()
+#include "stage6/RTLEmitter.h"        //** buildRTL() and dumpRTL()
 #include <iostream>                    // std::cerr for error output
 
 // Usage: fluxhls <source.cpp> [-- extra-clang-args...]
@@ -56,6 +57,11 @@ int main(int argc, const char **argv) {
     InterfaceContext ifCtx;                        // Stage 5 IR: AXI4-Lite register map + AXI4-Master ports
     buildInterfaces(bindCtx, ifCtx);               //** infer AXI interfaces from binding pragmas and loop bounds
     dumpInterfaces(ifCtx);                         // print AXI4-Lite register map and AXI4-Master port table
+
+    // ── Stage 6: RTL emission ─────────────────────────────────────────────────
+    RTLContext rtlCtx;                             // Stage 6 IR: one RTLModule (SV text) per kernel function
+    buildRTL(ifCtx, bindCtx, rtlCtx);             //** generate synthesisable SystemVerilog for each function
+    dumpRTL(rtlCtx);                               // write output/<func>.sv and print module summary to stdout
 
     return 0;                                      // successful exit
 }
